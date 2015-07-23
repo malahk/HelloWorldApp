@@ -84,7 +84,7 @@ public class RoleDAOImpl implements RoleDAO {
     @Override
     public Role getRole(Integer id)
     {
-        Role role = null;
+        Role role = new Role();
         try {
             PreparedStatement getById = connection.prepareStatement(GET_BY_ID);
             getById.setInt(1, id);

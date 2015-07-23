@@ -29,13 +29,13 @@ public class UserDAOImpl implements UserDAO
     public static final String APPEND_MUSIC_TYPE = "INSERT user_music_type SET user_id = ?, user_music_type_id = ?";
 
     private static Connection connection;
-    private static AddressDAOImpl addresImpl;
+    private AddressDAOImpl addressImpl;
     private static RoleDAOImpl roleImpl;
     private static MusicTypeDAOImpl musicImpl;
 
     public UserDAOImpl () {
         connection = MySQLConnector.getConn();
-        addresImpl = new AddressDAOImpl();
+        addressImpl = new AddressDAOImpl();
         roleImpl = new RoleDAOImpl();
         musicImpl = new MusicTypeDAOImpl();
     }
@@ -53,10 +53,12 @@ public class UserDAOImpl implements UserDAO
             createUser.setInt(3, user.getAge());
             createUser.setString(4, user.getLogin());
             createUser.setString(5, user.getPassword());
+            //TODO fix role id
 //            createUser.setInt(6, user.getRole().getId());
 
+            //TODO В адрес нужно вначале ид юзера проставить
             if(user.getAddress()!= null){
-                addresImpl.create(user.getAddress());
+                addressImpl.create(user.getAddress());
             }
 
             result = createUser.execute();
@@ -90,17 +92,18 @@ public class UserDAOImpl implements UserDAO
                 String lastName = allRS.getString(3);
                 String login = allRS.getString(4);
                 String password = allRS.getString(5);
-                Integer age = allRS.getInt(6);
+                //TODO fix age
+//                Integer age = allRS.getInt(6);
 
                 user.setId(id);
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
-                user.setAge(age);
                 user.setLogin(login);
                 user.setPassword(password);
+//                user.setAge(age);
 
                 user.setRole(roleImpl.getRole(allRS.getInt(7)));
-                Address address = addresImpl.getAddress(id);
+                Address address = addressImpl.getAddress(id);
                 if (address != null) {
                     user.setAddress(address);
                 }
@@ -144,7 +147,8 @@ public class UserDAOImpl implements UserDAO
                 user.setLogin(login);
                 user.setPassword(password);
                 user.setRole(roleImpl.getRole(id));
-                Address address = addresImpl.getAddress(id);
+                //TODO row 152
+                Address address = addressImpl.getAddress(id);
                 if (address != null) {
                     user.setAddress(address);
                 }
@@ -160,6 +164,7 @@ public class UserDAOImpl implements UserDAO
     }
 
     @Override
+    //TODO fix update
     public boolean update(User user)
     {
         boolean result = false;
@@ -176,7 +181,7 @@ public class UserDAOImpl implements UserDAO
             updateUser.setInt(7, user.getId());
 
             if (user.getAddress() != null) {
-                addresImpl.update(user.getAddress());
+                addressImpl.update(user.getAddress());
             }
 
             result = updateUser.execute();
@@ -222,7 +227,7 @@ public class UserDAOImpl implements UserDAO
             deleteUser.setInt(1, user.getId());
 
             if (user.getAddress() != null) {
-                addresImpl.delete(user.getAddress());
+                addressImpl.delete(user.getAddress());
             }
 
             for(MusicType mt : user.getMusicTypes()) {

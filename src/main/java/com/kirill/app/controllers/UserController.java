@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "user_list", method = RequestMethod.GET)
-    public ModelAndView rolesList() {
+    public ModelAndView userList() {
         List<User> users = this.userDAO.getAll();
         ModelAndView mav = new ModelAndView("userFormList");
         mav.addObject(users);
@@ -61,7 +61,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "update_user", method = RequestMethod.GET)
-    public ModelAndView updateAddress(@RequestParam(value="id") Integer id) {
+    public ModelAndView updateUser(@RequestParam(value="id") Integer id) {
         ModelAndView mav = new ModelAndView("userForm");
         mav.addObject(this.userDAO.getUser(id));
 

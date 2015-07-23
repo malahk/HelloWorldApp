@@ -121,10 +121,8 @@ public class MusicTypeDAOImpl implements MusicTypeDAO {
             ResultSet getMusicTypeRS = getById.executeQuery();
             while (getMusicTypeRS.next()) {
                 String genre = getMusicTypeRS.getString(2);
-
                 musicType.setId(id);
                 musicType.setMusicGenre(genre);
-
             }
             getById.close();
 

@@ -23,6 +23,9 @@
   <a href="
       <c:url value="/update_address">
         <c:param name="id" value="${address.id}"/>
+        <c:param name="country" value="${address.country}"/>
+        <c:param name="street" value="${address.street}"/>
+        <c:param name="zipCode" value="${address.zipCode}"/>
       </c:url>
       " >Edit</a>
 

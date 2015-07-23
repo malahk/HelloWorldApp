@@ -28,29 +28,45 @@ public class MusicType {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof MusicType)) return false;
-
-        MusicType musicType = (MusicType) o;
-
-        if (!getId().equals(musicType.getId())) return false;
-        return getMusicGenre().equals(musicType.getMusicGenre());
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId().hashCode();
-        result = 31 * result + getMusicGenre().hashCode();
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "MusicType{" +
                 "id=" + id +
                 ", musicGenre='" + musicGenre + '\'' +
                 '}';
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result
+                + ((musicGenre == null) ? 0 : musicGenre.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        MusicType other = (MusicType) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (musicGenre == null) {
+            if (other.musicGenre != null)
+                return false;
+        } else if (!musicGenre.equals(other.musicGenre))
+            return false;
+        return true;
+    }
+
+
 }
+

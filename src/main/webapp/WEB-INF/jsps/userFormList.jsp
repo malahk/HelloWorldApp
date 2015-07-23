@@ -25,6 +25,7 @@
     <a href="
       <c:url value="/update_user">
         <c:param name="id" value="${user.id}"/>
+
       </c:url>
       " >Edit</a>
 

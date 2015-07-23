@@ -40,7 +40,7 @@ public class AddressController {
     }
 
     @RequestMapping(value = "address_list", method = RequestMethod.GET)
-    public ModelAndView rolesList() {
+    public ModelAndView addressList() {
         List<Address> addresses = this.addressDAO.getAll();
         ModelAndView mav = new ModelAndView("addressFormList");
         mav.addObject(addresses);

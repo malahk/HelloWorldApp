@@ -71,7 +71,7 @@ public class AddressDAOImpl implements AddressDAO {
                 Integer id = allRS.getInt(1);
                 String country = allRS.getString(2);
                 String street = allRS.getString(3);
-                Integer zipCode = allRS.getInt(6);
+                Integer zipCode = allRS.getInt(4);
 
                 address.setId(id);
                 address.setCountry(country);
@@ -104,12 +104,13 @@ public class AddressDAOImpl implements AddressDAO {
 
                 String country = getAddressRS.getString(2);
                 String street = getAddressRS.getString(3);
-                Integer zipcode = getAddressRS.getInt(6);
+                //TODO fix zipCode
+                Integer zipCode = getAddressRS.getInt(4);
 
                 address.setId(id);
                 address.setCountry(country);
                 address.setStreet(street);
-                address.setZipCode(zipcode);
+                address.setZipCode(zipCode);
 
             }
 

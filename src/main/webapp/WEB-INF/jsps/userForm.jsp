@@ -20,13 +20,11 @@
   <br>
   Preferred music type:<input type="text" name="musicType">
   <br>
-  Role:<input type="text" name="role">
-  <br>
   Login:<input type="text" name="login">
   <br>
   Password:<input type="password" name="password">
   <br>
-  <input type="hidden" name="id" value="${address.id}">
+  <input type="hidden" name="id" value="${user.id}">
   <input type="submit" value="Submit">
   <input type="reset" value="Cancel">
   <input type="submit" value="Update">

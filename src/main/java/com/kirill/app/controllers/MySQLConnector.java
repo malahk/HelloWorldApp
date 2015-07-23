@@ -16,6 +16,7 @@ import java.util.Properties;
 /**
  * Created by Admin on 08.07.2015.
  */
+//TODO fix prop file
 @Repository
 public class MySQLConnector {
 

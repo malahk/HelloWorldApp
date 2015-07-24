@@ -16,16 +16,14 @@
 <h1>${message}</h1>
 
 <c:forEach var="address" items="${addressList}">
-  <p>${address.country}
-  <p>${address.street}
-  <p>${address.zipCode}
+  <p>
+  ${address.country}
+  ${address.street}
+  ${address.zipCode}
 
   <a href="
       <c:url value="/update_address">
         <c:param name="id" value="${address.id}"/>
-        <c:param name="country" value="${address.country}"/>
-        <c:param name="street" value="${address.street}"/>
-        <c:param name="zipCode" value="${address.zipCode}"/>
       </c:url>
       " >Edit</a>
 

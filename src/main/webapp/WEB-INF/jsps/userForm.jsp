@@ -11,7 +11,7 @@
     <title>User</title>
 </head>
 <body>
-<form action="/createForm"method="post">
+<form action="/update_user" method="post">
   First Name:<input type="text" name="firstName" >
   <br>
   Last Name:<input type="text" name="lastName">

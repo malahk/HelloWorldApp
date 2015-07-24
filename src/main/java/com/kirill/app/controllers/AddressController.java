@@ -73,7 +73,7 @@ public class AddressController {
         return "redirect:/address_list";
     }
 
-    @RequestMapping(value = "delete_address", method = RequestMethod.POST)
+    @RequestMapping(value = "delete_address", method = RequestMethod.GET)
     public String deleteAddress(HttpServletRequest request, final RedirectAttributes redirectAttributes) {
         String id = request.getParameter("id");
         AddressDAOImpl addressImpl = new AddressDAOImpl();

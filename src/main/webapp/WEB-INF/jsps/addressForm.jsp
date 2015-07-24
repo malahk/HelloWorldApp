@@ -13,12 +13,12 @@
     <title>Address</title>
 </head>
 <body>
-<form action="/createForm"method="post">
-  Country:<input type="text" name="country">
+<form action="/update_address" method="post">
+  Country:<input type="text" name="country" value="${address.country}">
   <br>
-  Street:<input type="text" name="street">
+  Street:<input type="text" name="street" value="${address.street}">
   <br>
-  ZipCode:<input type="text" name="zipCode">
+  ZipCode:<input type="text" name="zipCode" value="${address.zipCode}">
   <br>
   <input type="hidden" name="id" value="${address.id}">
   <input type="submit" value="Submit">

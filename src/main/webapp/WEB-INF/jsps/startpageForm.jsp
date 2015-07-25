@@ -17,7 +17,7 @@
   <br>
   Password:<input type="password" name="password">
   <br>
-  <input type="submit" value="SignIn">
+  <input type="submit" value="Sign In">
   <a href="<c:url value="/register" />" >Register</a>
 </form>
 </body>

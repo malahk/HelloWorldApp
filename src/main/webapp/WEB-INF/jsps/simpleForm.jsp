@@ -11,7 +11,7 @@
     <title>SimpleForm</title>
 </head>
 <body>
-<form action="/createForm"method="post">
+<form action="/createForm" method="post">
   First name:<br>
   <input type="text" name="firstname">
   <br>

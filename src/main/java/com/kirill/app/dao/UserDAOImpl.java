@@ -47,19 +47,17 @@ public class UserDAOImpl implements UserDAO
 
         try {
 
-            PreparedStatement createUser = connection.prepareStatement(CREATE_USER, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement createUser = connection.prepareStatement(
+                    CREATE_USER, Statement.RETURN_GENERATED_KEYS);
             createUser.setString(1, user.getFirstName());
             createUser.setString(2, user.getLastName());
             createUser.setInt(3, user.getAge());
             createUser.setString(4, user.getLogin());
             createUser.setString(5, user.getPassword());
-            //TODO fix role id
-//            createUser.setInt(6, user.getRole().getId());
 
-            //TODO В адрес нужно вначале ид юзера проставить
-            if(user.getAddress()!= null){
-                addressImpl.create(user.getAddress());
-            }
+            System.out.println(user.getRole().getId());
+
+            createUser.setInt(6, user.getRole().getId());
 
             result = createUser.execute();
 
@@ -67,21 +65,25 @@ public class UserDAOImpl implements UserDAO
             while (createdUsersRS.next()) {
                 user.setId(createdUsersRS.getInt(1));
 
+                if (user.getAddress() != null) {
+                    user.getAddress().setId(user.getId());
+                    addressImpl.create(user.getAddress());
+                }
             }
 
             createUser.close();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return result;
     }
 
     @Override
-    public List<User> getAll()
-    {
-        ArrayList<User> usersList = new ArrayList<User>();
+    public List<User> getAll() {
+        List<User> usersList = new ArrayList<User>();
         try {
-            Statement getAll  = connection.createStatement();
+            Statement getAll = connection.createStatement();
             ResultSet allRS = getAll.executeQuery(GET_ALL);
 
             while (allRS.next()) {
@@ -90,17 +92,17 @@ public class UserDAOImpl implements UserDAO
                 Integer id = allRS.getInt(1);
                 String firstName = allRS.getString(2);
                 String lastName = allRS.getString(3);
-                String login = allRS.getString(4);
-                String password = allRS.getString(5);
-                //TODO fix age
-//                Integer age = allRS.getInt(6);
+                Integer age = allRS.getInt(4);
+                String login = allRS.getString(5);
+                String password = allRS.getString(6);
+
 
                 user.setId(id);
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
+                user.setAge(age);
                 user.setLogin(login);
                 user.setPassword(password);
-//                user.setAge(age);
 
                 user.setRole(roleImpl.getRole(allRS.getInt(7)));
                 Address address = addressImpl.getAddress(id);
@@ -113,7 +115,7 @@ public class UserDAOImpl implements UserDAO
             }
 
             getAll.close();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -121,25 +123,18 @@ public class UserDAOImpl implements UserDAO
     }
 
     @Override
-    public User getUser(Integer id)
-    {
-        try
-        {
+    public User getUser(Integer id) {
+        User user = new User();
+        try {
             PreparedStatement getById = connection.prepareStatement(GET_BY_ID);
             getById.setInt(1, id);
-
             ResultSet getUserRS = getById.executeQuery();
-            User user = null;
-            while (getUserRS.next())
-            {
-                user = new User();
-
+            while (getUserRS.next()) {
                 String firstName = getUserRS.getString(2);
                 String lastName = getUserRS.getString(3);
-                String login = getUserRS.getString(4);
-                String password = getUserRS.getString(5);
-                Integer age = getUserRS.getInt(6);
-
+                Integer age = getUserRS.getInt(4);
+                String login = getUserRS.getString(5);
+                String password = getUserRS.getString(6);
                 user.setId(id);
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
@@ -147,7 +142,6 @@ public class UserDAOImpl implements UserDAO
                 user.setLogin(login);
                 user.setPassword(password);
                 user.setRole(roleImpl.getRole(id));
-                //TODO row 152
                 Address address = addressImpl.getAddress(id);
                 if (address != null) {
                     user.setAddress(address);
@@ -156,7 +150,7 @@ public class UserDAOImpl implements UserDAO
             }
             getById.close();
             return user;
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 

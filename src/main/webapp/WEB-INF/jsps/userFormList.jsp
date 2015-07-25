@@ -17,10 +17,10 @@
 
 <c:forEach var="user" items="${userList}">
   <p>${user.firstName}
-  <p>${user.lastName}
-  <p>${user.age}
-  <p>${user.login}
-  <p>${user.password}
+  ${user.lastName}
+  ${user.age}
+  ${user.login}
+  ${user.password}
 
     <a href="
       <c:url value="/update_user">
@@ -32,10 +32,9 @@
     <a href="
       <c:url value="/delete_user">
         <c:param name="id" value="${user.id}"/>
+
       </c:url>
       " >Delete</a>
-
-
   </p>
 </c:forEach>
 </body>

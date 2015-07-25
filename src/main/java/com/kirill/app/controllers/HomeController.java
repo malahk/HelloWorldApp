@@ -14,7 +14,7 @@ public class HomeController {
     @Autowired
     private UserDAO userDAO;
 
-    @RequestMapping(value = "/someshit", method = RequestMethod.GET)
+    @RequestMapping(value = "/some_shit", method = RequestMethod.GET)
     public ModelAndView homePage() {
 
 

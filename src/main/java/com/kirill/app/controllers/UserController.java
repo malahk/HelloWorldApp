@@ -27,13 +27,13 @@ public class UserController {
     @Autowired
     private UserDAO userDAO;
 
-    @RequestMapping(value = "user", method = RequestMethod.GET)
+    @RequestMapping(value = "create_user", method = RequestMethod.GET)
     public ModelAndView userShow() {
 
-        return new ModelAndView("userForm");
+        return new ModelAndView("userCreateForm");
     }
 
-    @RequestMapping(value = "user", method = RequestMethod.POST)
+    @RequestMapping(value = "create_user", method = RequestMethod.POST)
     public ModelAndView userCreate(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("dataFormView");
         mav.addObject("firstName", request.getParameter("firstName"));
@@ -62,7 +62,7 @@ public class UserController {
 
     @RequestMapping(value = "update_user", method = RequestMethod.GET)
     public ModelAndView updateUser(@RequestParam(value="id") Integer id) {
-        ModelAndView mav = new ModelAndView("userForm");
+        ModelAndView mav = new ModelAndView("userUpdateForm");
         mav.addObject(this.userDAO.getUser(id));
 
         return mav;
@@ -70,7 +70,7 @@ public class UserController {
 
     @RequestMapping(value = "update_user", method = RequestMethod.POST)
     public ModelAndView updateUser(HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("dataFormView");
+        ModelAndView mav = new ModelAndView("userUpdateForm");
         UserDAO userImpl = new UserDAOImpl();
         User user = extractUserFromRequest(request);
         userImpl.update(user);
@@ -79,12 +79,14 @@ public class UserController {
         return mav;
     }
 
-    @RequestMapping(value = "delete_user", method = RequestMethod.POST)
+    @RequestMapping(value = "delete_user", method = RequestMethod.GET)
     public String deleteUser(HttpServletRequest request, final RedirectAttributes redirectAttributes) {
         String userId = request.getParameter("id");
         UserDAO userImpl = new UserDAOImpl();
+        String name = userImpl.getUser(Integer.valueOf(userId)).getFirstName();
+        String lastName = userImpl.getUser(Integer.valueOf(userId)).getLastName();
         userImpl.delete(userImpl.getUser(Integer.valueOf(userId)));
-        redirectAttributes.addFlashAttribute("message", "User successfully deleted!");
+        redirectAttributes.addFlashAttribute("message", String.format("User %s %s successfully deleted!", lastName, name));
 
         return "redirect:/user_list";
     }

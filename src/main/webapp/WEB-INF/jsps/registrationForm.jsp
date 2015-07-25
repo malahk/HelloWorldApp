@@ -32,8 +32,8 @@
   <br>
   Repeat password:<input type="password" name="repeatedPassword">
   <br>
-  <input type="submit" value="Submit">
-  <input type="reset" value="Cancel">
+  <input type="submit" value="Register">
+  <input type="reset" value="Clean">
 </form>
 </body>
 </html>

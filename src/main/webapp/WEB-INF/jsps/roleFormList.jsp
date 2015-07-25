@@ -14,10 +14,8 @@
 </head>
 <body>
 <h1>${message}</h1>
-
 <c:forEach var="role" items="${roleList}">
   <p>${role.roleName}
-
     <a href="
       <c:url value="/update_role">
         <c:param name="id" value="${role.id}"/>
@@ -29,8 +27,6 @@
         <c:param name="id" value="${role.id}"/>
       </c:url>
       " >Delete</a>
-
-
   </p>
 </c:forEach>
 </body>

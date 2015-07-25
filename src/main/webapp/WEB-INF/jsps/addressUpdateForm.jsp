@@ -7,10 +7,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:url var="editUrl" value="{test}" />
 <html>
 <head>
-    <title>Address</title>
+    <title>Update Address</title>
 </head>
 <body>
 <form action="/update_address" method="post">
@@ -21,10 +20,8 @@
   ZipCode:<input type="text" name="zipCode" value="${address.zipCode}">
   <br>
   <input type="hidden" name="id" value="${address.id}">
-  <input type="submit" value="Submit">
-  <input type="reset" value="Cancel">
   <input type="submit" value="Update">
-  <input type="submit" value="Delete">
+  <input type="reset" value="Clean">
 </form>
 </body>
 </html>

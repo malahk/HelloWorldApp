@@ -26,15 +26,19 @@ public class MusicTypeController {
     @RequestMapping(value = "create_musictype", method = RequestMethod.GET)
     public ModelAndView musicTypePageShow() {
 
-        return new ModelAndView("musictypeForm");
+        return new ModelAndView("musictypeCreateForm");
     }
 
     @RequestMapping(value = "create_musictype", method = RequestMethod.POST)
-    public ModelAndView musicTypeCreate(HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("dataFormView");
-        mav.addObject("genre", request.getParameter("genre"));
+    public String musicTypeCreate(HttpServletRequest request, final RedirectAttributes redirectAttributes) {
+        MusicTypeDAOImpl musicTypeImpl = new MusicTypeDAOImpl();
+        MusicType musicType = new MusicType();
+        String genre = request.getParameter("musicGenre");
+        musicType.setMusicGenre(genre);
+        musicTypeImpl.create(musicType);
+        redirectAttributes.addFlashAttribute("message", String.format("New genre %s successfully created!", musicType.getMusicGenre()));
 
-        return mav;
+        return "redirect:/list_musictype";
     }
 
     @RequestMapping(value = "list_musictype", method = RequestMethod.GET)
@@ -48,14 +52,14 @@ public class MusicTypeController {
 
     @RequestMapping(value = "update_musictype", method = RequestMethod.GET)
     public ModelAndView updateMusicType(@RequestParam(value="id") Integer id) {
-        ModelAndView mav = new ModelAndView("musictypeForm");
+        ModelAndView mav = new ModelAndView("musictypeUpdateForm");
         mav.addObject(this.musicTypeDAO.getMusicType(id));
 
         return mav;
     }
 
     @RequestMapping(value = "update_musictype", method = RequestMethod.POST)
-    public String updateMusicType(HttpServletRequest request) {
+    public String updateMusicType(HttpServletRequest request, final RedirectAttributes redirectAttributes) {
         MusicType musicType = new MusicType();
         String id = request.getParameter("id");
         String genre = request.getParameter("genre");
@@ -63,6 +67,7 @@ public class MusicTypeController {
         musicType.setMusicGenre(genre);
         MusicTypeDAOImpl musicImpl = new MusicTypeDAOImpl();
         musicImpl.update(musicType);
+        redirectAttributes.addFlashAttribute("message", String.format("Genre %s successfully updated!", musicType.getMusicGenre()));
 
         return "redirect:/list_musictype";
     }
@@ -73,7 +78,7 @@ public class MusicTypeController {
         MusicTypeDAOImpl musicImpl = new MusicTypeDAOImpl();
         MusicType musicType = musicImpl.getMusicType(Integer.valueOf(id));
         musicImpl.delete(musicType);
-        redirectAttributes.addFlashAttribute("message", String.format("%s successfully deleted!", musicType.getMusicGenre()));
+        redirectAttributes.addFlashAttribute("message", String.format("Genre %s successfully deleted!", musicType.getMusicGenre()));
 
         return "redirect:/list_musictype";
     }

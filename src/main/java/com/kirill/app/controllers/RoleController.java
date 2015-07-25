@@ -26,15 +26,19 @@ public class RoleController {
     @RequestMapping(value = "create_role", method = RequestMethod.GET)
     public ModelAndView roleShow() {
 
-        return new ModelAndView("roleForm");
+        return new ModelAndView("roleCreateForm");
     }
 
     @RequestMapping(value = "create_role", method = RequestMethod.POST)
-    public ModelAndView roleCreate(HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("dataFormView");
-        mav.addObject("roleName", request.getParameter("roleName"));
+    public String roleCreate(HttpServletRequest request, final RedirectAttributes redirectAttributes) {
+        RoleDAOImpl roleImpl = new RoleDAOImpl();
+        Role role = new Role();
+        String roleName = request.getParameter("roleName");
+        role.setRoleName(roleName);
+        roleImpl.create(role);
+        redirectAttributes.addFlashAttribute("message", String.format("New role %s successfully created!", role.getRoleName()));
 
-        return mav;
+        return "redirect:/role_list";
     }
 
     @RequestMapping(value = "role_list", method = RequestMethod.GET)
@@ -48,14 +52,14 @@ public class RoleController {
 
     @RequestMapping(value = "update_role", method = RequestMethod.GET)
     public ModelAndView updateRole (@RequestParam(value="id") Integer id) {
-        ModelAndView mav = new ModelAndView("roleForm");
+        ModelAndView mav = new ModelAndView("roleUpdateForm");
         mav.addObject(this.roleDAO.getRole(id));
 
         return mav;
     }
 
     @RequestMapping(value = "update_role", method = RequestMethod.POST)
-    public String updateRole (HttpServletRequest request) {
+    public String updateRole (HttpServletRequest request, final RedirectAttributes redirectAttributes) {
         Role role = new Role();
         String id = request.getParameter("id");
         String roleName = request.getParameter("roleName");
@@ -63,6 +67,7 @@ public class RoleController {
         role.setRoleName(roleName);
         RoleDAOImpl roleImpl = new RoleDAOImpl();
         roleImpl.update(role);
+        redirectAttributes.addFlashAttribute("message", "Role is successfully updated!");
 
         return "redirect:/role_list";
     }
@@ -73,8 +78,9 @@ public class RoleController {
         RoleDAOImpl roleImpl = new RoleDAOImpl();
         Role role = roleImpl.getRole(Integer.valueOf(id));
         roleImpl.delete(role);
-        redirectAttributes.addFlashAttribute("message", String.format("%s successfully deleted!", role.getRoleName()));
+        redirectAttributes.addFlashAttribute("message", String.format("Role %s successfully deleted!", role.getRoleName()));
 
         return "redirect:/role_list";
     }
+
 }

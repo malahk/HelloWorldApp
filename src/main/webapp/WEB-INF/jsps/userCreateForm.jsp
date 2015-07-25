@@ -6,12 +6,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>User</title>
+  <title>Create new user</title>
 </head>
 <body>
-<form action="/update_user" method="post">
+<form action="/create_user" method="post">
   First Name:<input type="text" name="firstName" >
   <br>
   Last Name:<input type="text" name="lastName">
@@ -27,8 +28,7 @@
   <input type="hidden" name="id" value="${user.id}">
   <input type="submit" value="Submit">
   <input type="reset" value="Cancel">
-  <input type="submit" value="Update">
-  <input type="submit" value="Delete">
+  <a href="<c:url value="/update_user" />" >Update existing</a>
 </form>
 </body>
 </html>

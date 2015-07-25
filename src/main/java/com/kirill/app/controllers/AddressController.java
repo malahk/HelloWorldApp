@@ -2,6 +2,7 @@ package com.kirill.app.controllers;
 
 import com.kirill.app.dao.AddressDAO;
 import com.kirill.app.dao.AddressDAOImpl;
+import com.kirill.app.dao.UserDAOImpl;
 import com.kirill.app.models.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,19 +25,33 @@ public class AddressController {
     private AddressDAO addressDAO;
 
     @RequestMapping(value = "create_address", method = RequestMethod.GET)
-    public ModelAndView addressShow() {
+    public ModelAndView addressShow(HttpServletRequest request) throws Exception{
+        ModelAndView mav = new ModelAndView("addressCreateForm");
+        if (request.getParameter("userId") == null) {
+            throw new Exception("Item not found!");
+        }
+        mav.addObject("userId", request.getParameter("userId"));
 
-        return new ModelAndView("addressForm");
+        return mav;
     }
 
     @RequestMapping(value = "create_address", method = RequestMethod.POST)
-    public ModelAndView createAddress(HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("dataFormView");
-        mav.addObject("country", request.getParameter("country"));
-        mav.addObject("street", request.getParameter("street"));
-        mav.addObject("zipCode", request.getParameter("zipCode"));
+    public String createAddress(@RequestParam(value="userId") Integer userId, HttpServletRequest request, final RedirectAttributes redirectAttributes) {
+        AddressDAOImpl addressImpl = new AddressDAOImpl();
+        Address address = new Address();
+        UserDAOImpl userImpl = new UserDAOImpl();
+        String country = request.getParameter("country");
+        String street = request.getParameter("street");
+        String zipCode = request.getParameter("zipCode");
+        address.setCountry(country);
+        address.setStreet(street);
+        address.setZipCode(Integer.valueOf(zipCode));
+        address.setUser(userImpl.getUser(userId));
+        addressImpl.create(address);
+        redirectAttributes.addFlashAttribute("message", "Address successfully created!");
 
-        return mav;
+        return "redirect:/address_list";
+
     }
 
     @RequestMapping(value = "address_list", method = RequestMethod.GET)
@@ -50,14 +65,14 @@ public class AddressController {
 
     @RequestMapping(value = "update_address", method = RequestMethod.GET)
     public ModelAndView updateAddress(@RequestParam(value="id") Integer id) {
-        ModelAndView mav = new ModelAndView("addressForm");
+        ModelAndView mav = new ModelAndView("addressUpdateForm");
         mav.addObject(this.addressDAO.getAddress(id));
 
         return mav;
     }
 
     @RequestMapping(value = "update_address", method = RequestMethod.POST)
-    public String  updateAddress(HttpServletRequest request) {
+    public String  updateAddress(HttpServletRequest request, final RedirectAttributes redirectAttributes) {
         Address address = new Address();
         String id = request.getParameter("id");
         String country = request.getParameter("country");
@@ -69,6 +84,7 @@ public class AddressController {
         address.setZipCode(Integer.valueOf(zipCode));
         AddressDAOImpl addressImpl = new AddressDAOImpl();
         addressImpl.update(address);
+        redirectAttributes.addFlashAttribute("message", "Address successfully updated!");
 
         return "redirect:/address_list";
     }

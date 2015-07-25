@@ -14,7 +14,6 @@
 </head>
 <body>
 <h1>${message}</h1>
-
 <c:forEach var="address" items="${addressList}">
   <p>
   ${address.country}

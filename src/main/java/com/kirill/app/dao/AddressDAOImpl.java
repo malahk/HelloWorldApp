@@ -27,12 +27,12 @@ public class AddressDAOImpl implements AddressDAO {
     }
 
     @Override
-    public boolean create(Address address)
-    {
+    public boolean create(Address address) {
         boolean result = false;
 
         try {
-            PreparedStatement createAddress = connection.prepareStatement(CREATE_ADDRESS, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement createAddress = connection.prepareStatement(
+                    CREATE_ADDRESS, Statement.RETURN_GENERATED_KEYS);
             createAddress.setString(1, address.getCountry());
             createAddress.setString(2, address.getStreet());
             createAddress.setInt(3, address.getZipCode());
@@ -48,7 +48,7 @@ public class AddressDAOImpl implements AddressDAO {
 
             createAddress.close();
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -56,11 +56,10 @@ public class AddressDAOImpl implements AddressDAO {
     }
 
     @Override
-    public List<Address> getAll()
-    {
-        ArrayList<Address> addressList = new ArrayList<Address>();
+    public List<Address> getAll() {
+        List<Address> addressList = new ArrayList<Address>();
         try {
-            Statement getAll  = connection.createStatement();
+            Statement getAll = connection.createStatement();
             ResultSet allRS = getAll.executeQuery(GET_ALL);
             Address address;
 
@@ -82,7 +81,7 @@ public class AddressDAOImpl implements AddressDAO {
 
             getAll.close();
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -104,7 +103,6 @@ public class AddressDAOImpl implements AddressDAO {
 
                 String country = getAddressRS.getString(2);
                 String street = getAddressRS.getString(3);
-                //TODO fix zipCode
                 Integer zipCode = getAddressRS.getInt(4);
 
                 address.setId(id);

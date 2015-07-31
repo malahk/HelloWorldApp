@@ -31,13 +31,15 @@
 <div class="form">
   <fieldset>
     <legend align="center">Log In:</legend>
-    <form action="/login" method="post" >
+    <form action="/j_spring_security_check" method="post" >
       Login<br><input type="text" name="login">
       <br>
       Password<br><input type="password" name="password">
       <br>
       <input type="submit" value="Sign In">
       <a href="<c:url value="/register" />" >Register</a>
+      <input type="hidden" name="${_csrf.parameterName}"
+             value="${_csrf.token}" />
     </form>
   </fieldset>
 </div>

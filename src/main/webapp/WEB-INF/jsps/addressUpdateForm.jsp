@@ -10,18 +10,41 @@
 <html>
 <head>
     <title>Update Address</title>
+  <style>
+    legend {
+      font-size: 150%;
+      text-align: center;
+    }
+    div
+    {
+      display: block;
+      text-align: center;
+    }
+    form
+    {
+      display: inline-block;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-<form action="/update_address" method="post">
-  Country:<input type="text" name="country" value="${address.country}">
-  <br>
-  Street:<input type="text" name="street" value="${address.street}">
-  <br>
-  ZipCode:<input type="text" name="zipCode" value="${address.zipCode}">
-  <br>
-  <input type="hidden" name="id" value="${address.id}">
-  <input type="submit" value="Update">
-  <input type="reset" value="Clean">
-</form>
+<div align="center">
+  <fieldset>
+    <legend align="center">Update address:</legend>
+    <form action="/update_address" method="post">
+      Country:<input type="text" name="country" value="${address.country}">
+      <br>
+      Street:<input type="text" name="street" value="${address.street}">
+      <br>
+      ZipCode:<input type="text" name="zipCode" value="${address.zipCode}">
+      <br>
+      <input type="hidden" name="id" value="${address.id}">
+      <input type="submit" value="Update">
+      <input type="reset" value="Clean">
+    </form>
+  </fieldset>
+</div>
 </body>
 </html>

@@ -14,20 +14,23 @@
 </head>
 <body>
 <h1>${message}</h1>
-<c:forEach var="role" items="${roleList}">
-  <p>${role.roleName}
-    <a href="
+<fieldset>
+  <legend>List of roles:</legend>
+  <c:forEach var="role" items="${roleList}">
+    <p>${role.roleName}
+      <a href="
       <c:url value="/update_role">
         <c:param name="id" value="${role.id}"/>
       </c:url>
       " >Edit</a>
 
-    <a href="
+      <a href="
       <c:url value="/delete_role">
         <c:param name="id" value="${role.id}"/>
       </c:url>
       " >Delete</a>
-  </p>
-</c:forEach>
+    </p>
+  </c:forEach>
+</fieldset>
 </body>
 </html>

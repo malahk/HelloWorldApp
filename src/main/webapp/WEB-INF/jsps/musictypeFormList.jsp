@@ -14,6 +14,8 @@
 </head>
 <body>
 <h1>${message}</h1>
+<fieldset>
+  <legend>Genres list:</legend>
   <c:forEach var="musicType" items="${musicTypeList}">
     <p>${musicType.musicGenre}
 
@@ -33,6 +35,6 @@
 
     </p>
   </c:forEach>
-
+</fieldset>
 </body>
 </html>

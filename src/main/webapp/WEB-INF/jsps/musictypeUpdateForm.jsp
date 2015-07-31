@@ -9,13 +9,36 @@
 <html>
 <head>
     <title>Update genre</title>
+  <style>
+    legend {
+      font-size: 150%;
+      text-align: center;
+    }
+    div.form
+    {
+      display: block;
+      text-align: center;
+    }
+    form
+    {
+      display: inline-block;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-<form action="/update_musictype" method="post">
-  Genre:<input type="text" name="genre" value="${musicType.musicGenre}">
-  <input type="hidden" name="id" value="${musicType.id}">
-  <input type="submit" value="Update">
-  <input type="reset" value="Clean">
-</form>
+<div class="form">
+  <fieldset>
+    <legend align="center">Update genre:</legend>
+    <form action="/update_musictype" method="post">
+      Genre:<input type="text" name="genre" value="${musicType.musicGenre}">
+      <input type="hidden" name="id" value="${musicType.id}">
+      <input type="submit" value="Update">
+      <input type="reset" value="Clean">
+    </form>
+  </fieldset>
+</div>
 </body>
 </html>

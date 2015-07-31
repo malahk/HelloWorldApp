@@ -27,9 +27,9 @@ public class AddressController {
     @RequestMapping(value = "create_address", method = RequestMethod.GET)
     public ModelAndView addressShow(HttpServletRequest request) throws Exception{
         ModelAndView mav = new ModelAndView("addressCreateForm");
-        if (request.getParameter("userId") == null) {
-            throw new Exception("Item not found!");
-        }
+//        if (request.getParameter("userId") == null) {
+//            throw new Exception("Item not found!");
+//        }
         mav.addObject("userId", request.getParameter("userId"));
 
         return mav;

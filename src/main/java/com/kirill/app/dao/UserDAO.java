@@ -2,6 +2,7 @@ package com.kirill.app.dao;
 
 import com.kirill.app.models.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public interface UserDAO {
 
-    boolean create(User user);
+    boolean create(User user) throws SQLException;
     List<User> getAll();
     User getUser(Integer id);
     boolean update(User user);

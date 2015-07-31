@@ -2,6 +2,7 @@ package com.kirill.app.dao;
 
 import com.kirill.app.controllers.MySQLConnector;
 import com.kirill.app.models.Role;
+import com.kirill.app.models.Roles;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -17,6 +18,7 @@ public class RoleDAOImpl implements RoleDAO {
     public static final String CREATE_ROLE = "insert role set id = ?, role_name = ?";
     public static final String GET_ALL = "select * from role";
     public static final String GET_BY_ID = "select * from role where id = ?";
+    public static final String GET_BY_ROLE = "select * from role where role_name = ?";
     public static final String UPDATE_ROLE = "update role set role_name = ? where id = ?";
     public static final String DELETE_ROLE = "delete from role where id = ?";
 
@@ -98,6 +100,29 @@ public class RoleDAOImpl implements RoleDAO {
             }
              getById.close();
 
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return role;
+    }
+
+    @Override
+    public Role getByName(Roles.RoleEnum roleEnum)
+    {
+        Role role = new Role();
+        try {
+            PreparedStatement getByName = connection.prepareStatement(GET_BY_ROLE);
+            getByName.setString(1, Roles.nameMap().get(roleEnum));
+            ResultSet getRoleRS = getByName.executeQuery();
+
+            while (getRoleRS.next())
+            {
+                String roleName = getRoleRS.getString(2);
+                role.setId(getRoleRS.getInt(1));
+                role.setRoleName(roleName);
+            }
+             getByName.close();
         } catch (SQLException e){
             e.printStackTrace();
         }

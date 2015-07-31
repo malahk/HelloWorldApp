@@ -8,9 +8,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title></title>
+    <title>Index page</title>
+    <style>
+        .header {
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-      Hello World!!!
+<div id="header">
+    Hello ${user.getRole.roleName} ${user.getName}:
+</div>
 </body>
 </html>

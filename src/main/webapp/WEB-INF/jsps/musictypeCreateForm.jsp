@@ -10,14 +10,37 @@
 <html>
 <head>
   <title>Create new genre</title>
+  <style>
+    legend {
+      font-size: 150%;
+      text-align: center;
+    }
+    div.form
+    {
+      display: block;
+      text-align: center;
+    }
+    form
+    {
+      display: inline-block;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-<h1>${message}</h1>
-<form action="/create_musictype" method="post">
-  Music genre:<input type="text" name="musicGenre" >
-  <input type="submit" value="Create">
-  <input type="reset" value="Clean">
-  <a href="<c:url value="/update_musictype" />" >Update existing</a>
-</form>
+<h1 align="center">${message}</h1>
+<div class="form">
+  <fieldset>
+    <legend align="center">Create genre:</legend>
+    <form action="/create_musictype" method="post">
+      Music genre:<input type="text" name="musicGenre" >
+      <input type="submit" value="Create">
+      <input type="reset" value="Clean">
+      <a href="<c:url value="/update_musictype" />" >Update existing</a>
+    </form>
+  </fieldset>
+</div>
 </body>
 </html>

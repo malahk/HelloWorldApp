@@ -5,6 +5,7 @@ import com.kirill.app.dao.UserDAOImpl;
 import com.kirill.app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,10 +53,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "user_list", method = RequestMethod.GET)
-    public ModelAndView userList() {
+    public ModelAndView userList(@CookieValue(value = "user_id", defaultValue = "") String user_id) {
         List<User> users = this.userDAO.getAll();
         ModelAndView mav = new ModelAndView("userFormList");
         mav.addObject(users);
+        mav.addObject(this.userDAO.getUser(Integer.valueOf(user_id)));
 
         return mav;
     }

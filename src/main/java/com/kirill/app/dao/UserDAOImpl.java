@@ -16,8 +16,7 @@ import java.util.*;
 public class UserDAOImpl implements UserDAO
 {
     public static final String CREATE_USER = "insert users set firstName = ?, lastName = ?, age = ?, login = ?," +
-//            " password = ?, role_id = ? ";
-            " password = ?";
+            " password = ?, role_id = ? ";
     public static final String GET_ALL = "select * from users";
     public static final String GET_BY_ID = "select * from users where id = ?";
     public static final String GET_BY_LOGIN = "select * from users where login = ?";
@@ -41,40 +40,34 @@ public class UserDAOImpl implements UserDAO
     }
 
     @Override
-    public boolean create(User user) {
+    public boolean create(User user) throws SQLException {
 
         boolean result = false;
 
-        try {
+        PreparedStatement createUser = connection.prepareStatement(
+                CREATE_USER, Statement.RETURN_GENERATED_KEYS);
+        createUser.setString(1, user.getFirstName());
+        createUser.setString(2, user.getLastName());
+        createUser.setInt(3, user.getAge());
+        createUser.setString(4, user.getLogin());
+        createUser.setString(5, user.getPassword());
 
-            PreparedStatement createUser = connection.prepareStatement(
-                    CREATE_USER, Statement.RETURN_GENERATED_KEYS);
-            createUser.setString(1, user.getFirstName());
-            createUser.setString(2, user.getLastName());
-            createUser.setInt(3, user.getAge());
-            createUser.setString(4, user.getLogin());
-            createUser.setString(5, user.getPassword());
+        System.out.println(user.getRole().getId());
 
-            System.out.println(user.getRole().getId());
+        createUser.setInt(6, user.getRole().getId());
 
-            createUser.setInt(6, user.getRole().getId());
+        result = createUser.execute();
 
-            result = createUser.execute();
+        ResultSet createdUsersRS = createUser.getGeneratedKeys();
+        while (createdUsersRS.next()) {
+            user.setId(createdUsersRS.getInt(1));
 
-            ResultSet createdUsersRS = createUser.getGeneratedKeys();
-            while (createdUsersRS.next()) {
-                user.setId(createdUsersRS.getInt(1));
-
-                if (user.getAddress() != null) {
-                    user.getAddress().setId(user.getId());
-                    addressImpl.create(user.getAddress());
-                }
+            if (user.getAddress() != null) {
+                user.getAddress().setUser(user);
+                addressImpl.create(user.getAddress());
             }
-
-            createUser.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+        createUser.close();
 
         return result;
     }
@@ -141,7 +134,7 @@ public class UserDAOImpl implements UserDAO
                 user.setAge(age);
                 user.setLogin(login);
                 user.setPassword(password);
-                user.setRole(roleImpl.getRole(id));
+                user.setRole(roleImpl.getRole(getUserRS.getInt(7)));
                 Address address = addressImpl.getAddress(id);
                 if (address != null) {
                     user.setAddress(address);
@@ -257,8 +250,10 @@ public class UserDAOImpl implements UserDAO
 
 				String password = getUserRS.getString(2);
 
+				user.setId(getUserRS.getInt(1));
 				user.setLogin(login);
 				user.setPassword(password);
+                user.setRole(roleImpl.getRole(getUserRS.getInt(7)));
 			}
 
 		} catch (SQLException e) {

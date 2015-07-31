@@ -10,25 +10,48 @@
 <html>
 <head>
   <title>Create new user</title>
+  <style>
+    legend {
+      font-size: 150%;
+      text-align: center;
+    }
+    div.form
+    {
+      display: block;
+      text-align: center;
+    }
+    form
+    {
+      display: inline-block;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-<form action="/create_user" method="post">
-  First Name:<input type="text" name="firstName" >
-  <br>
-  Last Name:<input type="text" name="lastName">
-  <br>
-  Age:<input type="text" name="age">
-  <br>
-  Preferred music type:<input type="text" name="musicType">
-  <br>
-  Login:<input type="text" name="login">
-  <br>
-  Password:<input type="password" name="password">
-  <br>
-  <input type="hidden" name="id" value="${user.id}">
-  <input type="submit" value="Submit">
-  <input type="reset" value="Cancel">
-  <a href="<c:url value="/update_user" />" >Update existing</a>
-</form>
+<div class="form">
+  <fieldset>
+    <legend align="center">Create user:</legend>
+    <form action="/create_user" method="post">
+      First Name:<br><input type="text" name="firstName" >
+      <br>
+      Last Name:<br><input type="text" name="lastName">
+      <br>
+      Age:<br><input type="text" name="age">
+      <br>
+      Preferred music type:<br><input type="text" name="musicType">
+      <br>
+      Login:<br><input type="text" name="login">
+      <br>
+      Password:<br><input type="password" name="password">
+      <br>
+      <input type="hidden" name="id" value="${user.id}">
+      <input type="submit" value="Submit">
+      <input type="reset" value="Cancel">
+      <a href="<c:url value="/update_user" />" >Update existing</a>
+    </form>
+  </fieldset>
+</div>
 </body>
 </html>

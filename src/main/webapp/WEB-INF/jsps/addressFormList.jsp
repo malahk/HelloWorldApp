@@ -14,26 +14,27 @@
 </head>
 <body>
 <h1>${message}</h1>
-<c:forEach var="address" items="${addressList}">
-  <p>
-  ${address.country}
-  ${address.street}
-  ${address.zipCode}
+<fieldset>
+  <legend>Address list:</legend>
+  <c:forEach var="address" items="${addressList}">
+    <p>
+        ${address.country}
+        ${address.street}
+        ${address.zipCode}
 
-  <a href="
+      <a href="
       <c:url value="/update_address">
         <c:param name="id" value="${address.id}"/>
       </c:url>
       " >Edit</a>
 
-    <a href="
+      <a href="
       <c:url value="/delete_address">
         <c:param name="id" value="${address.id}"/>
       </c:url>
       " >Delete</a>
-
-
-  </p>
-</c:forEach>
+    </p>
+  </c:forEach>
+</fieldset>
 </body>
 </html>

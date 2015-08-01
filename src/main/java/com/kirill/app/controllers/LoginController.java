@@ -47,7 +47,7 @@ public class LoginController {
             return "redirect:/login";
         }
 
-        response.addCookie(new Cookie("user_id", user.getId().toString()));
+//        response.addCookie(new Cookie("user_id", user.getId().toString()));
 
         return "redirect:/";
     }

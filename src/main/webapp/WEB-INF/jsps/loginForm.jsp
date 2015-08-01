@@ -29,17 +29,28 @@
 </head>
 <body>
 <div class="form">
+
+  <c:if test="${not empty error}">
+    <div class="error">${error}</div>
+  </c:if>
+  <c:if test="${not empty msg}">
+    <div class="msg">${msg}</div>
+  </c:if>
+
   <fieldset>
     <legend align="center">Log In:</legend>
-    <form action="/j_spring_security_check" method="post" >
+    <form
+            action="<c:url value='/j_spring_security_check' />" method='POST'>
       Login<br><input type="text" name="login">
       <br>
       Password<br><input type="password" name="password">
       <br>
       <input type="submit" value="Sign In">
       <a href="<c:url value="/register" />" >Register</a>
+
       <input type="hidden" name="${_csrf.parameterName}"
              value="${_csrf.token}" />
+
     </form>
   </fieldset>
 </div>

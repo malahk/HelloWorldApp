@@ -34,6 +34,18 @@
   </style>
 </head>
 <body>
+
+<c:url value="/j_spring_security_logout" var="logoutUrl" />
+<form action="${logoutUrl}" method="post" id="logoutForm">
+  <input type="hidden" name="${_csrf.parameterName}"
+         value="${_csrf.token}" />
+</form>
+<script>
+  function formSubmit() {
+    document.getElementById("logoutForm").submit();
+  }
+</script>
+
 <div id="header">
   Hi ${user.firstName}, you are ${user.role.roleName}.
   <a class="logOut" href="<c:url value="/logOut" />">logout</a>

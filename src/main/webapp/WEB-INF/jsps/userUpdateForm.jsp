@@ -39,7 +39,13 @@
       <br>
       Age:<br><input type="text" name="age" value="${user.age}">
       <br>
-      Preferred music type:<br><input type="text" name="musicType" value="${user.musicTypes}">
+      Country:<br><input type="text" name="age" value="${user.address.country}">
+      <br>
+      Street:<br><input type="text" name="age" value="${user.address.street}">
+      <br>
+      Zip Code:<br><input type="text" name="age" value="${user.address.zipCode}">
+      <%--<br>--%>
+      <%--Preferred music type:<br><input type="text" name="musicType" value="${user.musicTypes}">--%>
       <br>
       Login:<br><input type="text" name="login" value="${user.login}">
       <br>
@@ -49,7 +55,7 @@
       <input type="hidden" name="addressId" value="${address.id}">
       <input type="hidden" name="roleId" value="${role.id}">
       <input type="submit" value="Update">
-      <input type="reset" value="Clean">
+      <input type="reset" value="Clean"><input type="button" onclick="location.href='/user_list';" value="Update existing" />
     </form>
   </fieldset>
 </div>

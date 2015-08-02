@@ -1,5 +1,6 @@
 package com.kirill.app.controllers;
 
+import com.kirill.app.dao.UserDAO;
 import com.kirill.app.dao.UserDAOImpl;
 import com.kirill.app.models.Roles;
 import com.kirill.app.models.User;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * Created by Admin
@@ -28,20 +30,22 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class IndexController
 {
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String indexShow(
-//            HttpServletResponse response,
-//            HttpServletRequest request,
-//            @CookieValue(value = "user_id", defaultValue = "") String user_id
     ) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (auth instanceof AnonymousAuthenticationToken) {
-            return "redirect:/403";
+            return "redirect:/login";
         }
 
         if (auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
             return "redirect:/user_list";
+        }
+
+        if (auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_MODERATOR"))) {
+            return "redirect:/moderator_page";
         }
 
         if (auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
@@ -51,22 +55,13 @@ public class IndexController
         return "redirect:/login";
     }
 
-//    @RequestMapping(value = "/helloPage", method = RequestMethod.GET)
-//    public ModelAndView comeBackPage (@CookieValue(value = "user_id", defaultValue = "") String user_id) {
-//        User user = new UserDAOImpl().getUser(Integer.valueOf(user_id));
-//        System.out.println(user.toString());
-//
-//        ModelAndView mav = new ModelAndView("helloPage");
-//        mav.addObject(user);
-//
-//        return mav;
-//    }
-
     @RequestMapping(value = "/helloPage", method = RequestMethod.GET)
     public ModelAndView login(@RequestParam(value = "error", required = false) String error,
                               @RequestParam(value = "logout", required = false) String logout) {
-
         ModelAndView model = new ModelAndView();
+        model.addObject("title", "Spring Security Login");
+        model.addObject("message", "You have successfully logged in!");
+
         if (error != null) {
             model.addObject("error", "Invalid username and password!");
         }
@@ -80,9 +75,18 @@ public class IndexController
 
     }
 
+    @RequestMapping(value = "moderator_page", method = RequestMethod.GET)
+    public ModelAndView moderatorLogInPage() {
+        UserDAO userDAO = new UserDAOImpl();
+        List<User> users = userDAO.getAll();
+        ModelAndView mav = new ModelAndView("moderatorLogInPage");
+        mav.addObject(users);
+
+        return mav;
+    }
+
 //    @RequestMapping(value = "/logOut", method = RequestMethod.GET)
-//    public String logOut (HttpServletResponse response) {
-//        response.addCookie(new Cookie("user_id", ""));
+//    public String logOut () {
 //
 //        return "redirect:/";
 //    }

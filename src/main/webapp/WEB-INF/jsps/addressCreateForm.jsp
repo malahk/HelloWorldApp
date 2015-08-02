@@ -45,7 +45,7 @@
       <input type="hidden" name="userId" value="${userId}">
       <input type="submit" value="Create">
       <input type="reset" value="Cancel">
-      <a href="<c:url value="/update_address" />" >Update existing</a>
+      <input type="button" onclick="location.href='/address_list';" value="Update existing" />
     </form>
   </fieldset>
   </div>

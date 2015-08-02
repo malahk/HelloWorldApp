@@ -14,15 +14,16 @@ import java.util.EnumMap;
 public class Roles
 {
     public enum  RoleEnum {
-        DEFAULT, USER, ADMIN
+        DEFAULT, USER, ADMIN, MODERATOR
     }
 
     public static EnumMap<RoleEnum, String> nameMap()
     {
         EnumMap<RoleEnum, String> roleMap = new EnumMap<RoleEnum, String>(RoleEnum.class);
-        roleMap.put(RoleEnum.USER, "user");
-        roleMap.put(RoleEnum.DEFAULT, "user");
-        roleMap.put(RoleEnum.ADMIN, "admin");
+        roleMap.put(RoleEnum.USER, "ROLE_USER");
+        roleMap.put(RoleEnum.DEFAULT, "ROLE_USER");
+        roleMap.put(RoleEnum.ADMIN, "ROLE_ADMIN");
+        roleMap.put(RoleEnum.MODERATOR, "ROLE_MODERATOR");
 
         return roleMap;
     }

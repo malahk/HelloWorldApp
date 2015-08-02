@@ -46,7 +46,7 @@
       Password<br><input type="password" name="password">
       <br>
       <input type="submit" value="Sign In">
-      <a href="<c:url value="/register" />" >Register</a>
+      <input type="button" onclick="location.href='/register';" value="Register" />
 
       <input type="hidden" name="${_csrf.parameterName}"
              value="${_csrf.token}" />

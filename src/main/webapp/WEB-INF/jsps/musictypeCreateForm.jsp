@@ -38,7 +38,7 @@
       Music genre:<input type="text" name="musicGenre" >
       <input type="submit" value="Create">
       <input type="reset" value="Clean">
-      <a href="<c:url value="/update_musictype" />" >Update existing</a>
+      <input type="button" onclick="location.href='/list_musictype';" value="Update existing" />
     </form>
   </fieldset>
 </div>

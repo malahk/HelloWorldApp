@@ -11,26 +11,48 @@
 <html>
 <head>
     <title>Roles List</title>
+  <style>
+    table, th, td {
+      border: 2px solid black;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 5px;
+    }
+  </style>
 </head>
 <body>
 <h1>${message}</h1>
 <fieldset>
   <legend>List of roles:</legend>
-  <c:forEach var="role" items="${roleList}">
-    <p>${role.roleName}
-      <a href="
+  <table>
+    <tr>
+      <th>Role name</th>
+      <th>Action</th>
+    </tr>
+    <c:forEach var="role" items="${roleList}">
+      <p>
+      <tr>
+        <td>${role.roleName}</td>
+        <td>
+          <a href="
       <c:url value="/update_role">
         <c:param name="id" value="${role.id}"/>
       </c:url>
       " >Edit</a>
 
-      <a href="
+          <a href="
       <c:url value="/delete_role">
         <c:param name="id" value="${role.id}"/>
       </c:url>
       " >Delete</a>
-    </p>
-  </c:forEach>
+        </td>
+        </tr>
+      </p>
+    </c:forEach>
+  </table>
+  <br>
+  <input type="button" onclick="location.href='/create_role';" value="Add new role" />
 </fieldset>
 </body>
 </html>

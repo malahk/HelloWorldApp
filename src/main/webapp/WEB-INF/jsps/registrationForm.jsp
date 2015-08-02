@@ -55,7 +55,8 @@
       <br>
       Password:<br><input type="password" name="password">
       <br>
-      Repeat password:<em class="error">${password_error}</em>
+      Repeat password:
+      <em class="error">${password_error}</em>
       <br><input type="password" name="repeatedPassword">
       <br>
       <input type="submit" value="Register">

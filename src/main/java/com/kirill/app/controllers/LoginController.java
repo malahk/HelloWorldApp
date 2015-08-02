@@ -37,8 +37,7 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String startCreate(
-            HttpServletRequest request,
-            HttpServletResponse response
+            HttpServletRequest request
     ) {
         UserDAOImpl userDAO = new UserDAOImpl();
         User user = userDAO.getByLogin(request.getParameter("login"));
@@ -46,8 +45,6 @@ public class LoginController {
         if (user == null || ! user.getPassword().equals(request.getParameter("password"))) {
             return "redirect:/login";
         }
-
-//        response.addCookie(new Cookie("user_id", user.getId().toString()));
 
         return "redirect:/";
     }

@@ -38,7 +38,7 @@
       Role Name:<input type="text" name="roleName" >
       <input type="submit" value="Create">
       <input type="reset" value="Clean">
-      <a href="<c:url value="/update_role" />" >Update existing</a>
+      <input type="button" onclick="location.href='/role_list';" value="Update existing" />
     </form>
   </fieldset>
 </div>

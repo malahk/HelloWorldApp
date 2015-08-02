@@ -1,7 +1,10 @@
 package com.kirill.app.controllers;
 
+import com.kirill.app.dao.AddressDAO;
+import com.kirill.app.dao.AddressDAOImpl;
 import com.kirill.app.dao.UserDAO;
 import com.kirill.app.dao.UserDAOImpl;
+import com.kirill.app.models.Address;
 import com.kirill.app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,11 +56,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "user_list", method = RequestMethod.GET)
-    public ModelAndView userList(@CookieValue(value = "user_id", defaultValue = "") String user_id) {
+         public ModelAndView userList() {
         List<User> users = this.userDAO.getAll();
         ModelAndView mav = new ModelAndView("userFormList");
         mav.addObject(users);
-        mav.addObject(this.userDAO.getUser(Integer.valueOf(user_id)));
 
         return mav;
     }
@@ -71,14 +73,16 @@ public class UserController {
     }
 
     @RequestMapping(value = "update_user", method = RequestMethod.POST)
-    public ModelAndView updateUser(HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("userUpdateForm");
+    public String updateUser(HttpServletRequest request, final RedirectAttributes redirectAttributes) {
         UserDAO userImpl = new UserDAOImpl();
         User user = extractUserFromRequest(request);
         userImpl.update(user);
-        mav.addObject(userImpl);
+        AddressDAO addressImpl = new AddressDAOImpl();
+        Address address = extractAddressFromForm(request, user);
+        addressImpl.update(address);
+        redirectAttributes.addFlashAttribute("message", String.format("User (%s) is successfully updated!", user.getFirstName()));
 
-        return mav;
+        return "redirect:/user_list";
     }
 
     @RequestMapping(value = "delete_user", method = RequestMethod.GET)
@@ -107,5 +111,21 @@ public class UserController {
         user.setPassword(pass);
 
         return user;
+    }
+
+    private Address extractAddressFromForm (HttpServletRequest request, User user){
+        String country = request.getParameter("country");
+//        if (country.equals("")) {
+//
+//        }
+
+        Address address = new Address();
+        String street = request.getParameter("street");
+        String zipCode = request.getParameter("zipCode");
+        address.setCountry(country);
+        address.setStreet(street);
+        address.setZipCode(Integer.valueOf(zipCode));
+
+        return address;
     }
 }
